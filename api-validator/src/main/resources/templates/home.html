@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>API Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            color: #333;
+            animation: slideDown 0.5s ease-in-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 50px auto;
+            max-width: 750px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.5s ease-in-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        form {
+            padding: 20px;
+            width: 40%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .checkLabel {
+            width: auto !important;
+        }
+
+        .check {
+            display: inline !important;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        h2 {
+            margin: 20px 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .response {
+            padding: 20px;
+            width: 50%;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+        }
+
+        .response p {
+            margin: 10px 0;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .response .status {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .response .result {
+            font-weight: bold;
+            color: #333;
+        }
+
+
+        .method-get {
+            color: #3ab63a;
+        }
+
+        .method-post {
+            color: #14678a;
+        }
+
+        .method-put {
+            color: rgba(245, 158, 26, 0.85);
+        }
+
+        .method-delete {
+            color: #ab1829;
+        }
+
+        form.submitting {
+            animation: submitting 1s ease-in-out;
+        }
+
+        @keyframes submitting {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<h1>API Test Page</h1>
+<div class="container">
+    <form th:action="@{/home}" method="post" enctype="application/json" th:object="${operationDto}">
+        <h2>API Request</h2>
+        <label for="url">API URL:</label>
+        <input type="text" id="url" name="url" th:value="*{url}">
+        <label for="method">API Method:</label>
+        <select id="method" name="type" onchange="toggleBodyField()">
+            <option value="GET" class="method-get" th:selected="*{type == 'GET'}">GET</option>
+            <option value="POST" class="method-post" th:selected="*{type == 'POST'}">POST</option>
+            <option value="PUT" class="method-put" th:selected="*{type == 'PUT'}">PUT</option>
+            <option value="DELETE" class="method-delete" th:selected="*{type == 'DELETE'}">DELETE</option>
+        </select>
+
+        <div id="bodyField" style="display: none;">
+            <label for="body">API Body:</label>
+            <textarea id="body" name="body" th:value="*{body}"></textarea>
+        </div>
+
+        <div onchange="toggleExpectedField()" id="expected">
+            <label for="response">Expected Response:</label>
+            <textarea id="response" name="expectedResponse" th:text="*{expectedResponse}"></textarea>
+        </div>
+
+        <div class="form-row" id="checkBoxes">
+
+            <div class="form-check">
+                <input class="form-check-input checkLabel" name="expectedType" type="radio" value="number"
+                       id="flexCheckDefault" th:checked="*{expectedType == 'number'}">
+                <label class="form-check-label check" for="flexCheckDefault">
+                    Number
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input checkLabel" name="expectedType" type="radio" value="string"
+                       id="flexCheckChecked" th:checked="*{expectedType == 'string'}">
+                <label class="form-check-label check" for="flexCheckChecked">
+                    String
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input checkLabel" name="expectedType" type="radio" value="boolean"
+                       id="flexCheckBoolean" th:checked="*{expectedType == 'boolean'}">
+                <label class="form-check-label check" for="flexCheckBoolean">
+                    Boolean
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input checkLabel" name="expectedType" type="radio" value="json"
+                       id="flexCheckJson" th:checked="*{expectedType == 'json'}">
+                <label class="form-check-label check" for="flexCheckJson">
+                    Json
+                </label>
+            </div>
+        </div>
+        <script>
+
+        </script>
+
+        <script>
+            function toggleBodyField() {
+                var methodSelect = document.getElementById("method");
+                var bodyField = document.getElementById("bodyField");
+                var responseLabel = document.getElementById("expected");
+
+                if (methodSelect.value === "POST" || methodSelect.value === "PUT") {
+                    bodyField.style.display = "block";
+                    responseLabel.style.display = "none";
+                } else {
+                    bodyField.style.display = "none";
+                    responseLabel.style.display = "block";
+                }
+                if (methodSelect.value === "DELETE")
+                    responseLabel.style.display = "none";
+
+                var checkBoxes = document.getElementById("checkBoxes");
+                if (methodSelect.value === "GET")
+                    checkBoxes.style.display = "none";
+                else
+                    checkBoxes.style.display = "block";
+            }
+
+            document.getElementById("checkBoxes").style.display = "none";
+
+        </script>
+        <script>
+            document.querySelector('form').addEventListener('submit', function () {
+                this.classList.add('submitting');
+            });
+        </script>
+        <input type="submit" value="Send">
+    </form>
+</div>
+</body>
+</html>
