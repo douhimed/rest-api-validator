@@ -1,0 +1,22 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="accordion" id="operationDetailsAccordion">
+        <div *ngFor="let detail of operationDetails" class="accordion-item">
+          <h2 class="accordion-header" (click)="toggleCollapse(detail)">
+            <button class="accordion-button" type="button" [attr.aria-expanded]="!detail.collapsed"
+                    [attr.aria-controls]="'collapse-' + detail.title" [ngClass]="{ 'collapsed': detail.collapsed }">
+              <strong>{{ detail.title }}</strong>
+            </button>
+          </h2>
+          <div [id]="'collapse-' + detail.title" class="accordion-collapse collapse"
+               [attr.aria-labelledby]="'collapse-' + detail.title" [ngClass]="{ 'show': !detail.collapsed }">
+            <div class="accordion-body">
+              <pre class="form-control-plaintext">{{ detail.content }}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

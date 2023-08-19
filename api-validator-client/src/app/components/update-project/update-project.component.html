@@ -1,0 +1,27 @@
+<div class="container d-flex justify-content-center">
+  <div class="card col-md-4 mt-4">
+    <div class="card-header">Update project</div>
+    <div class="card-body">
+      <form [formGroup]="updateProjectFormGroup" (ngSubmit)="handleUpdateProject()">
+        <div class="mb-3">
+          <label class="form-label">New name:</label>
+          <input type="name" formControlName="name" class="form-control">
+          <span class="text-danger"
+                *ngIf="updateProjectFormGroup.controls['name'].touched
+                && updateProjectFormGroup.controls['name'].errors
+                && updateProjectFormGroup.controls['name'].errors!['required']">
+                Name is required
+          </span>
+          <div class="mb-3 mt-3">
+            <label class="form-label">With Authentication</label>
+            <input type="checkbox" style="margin-left: 10px;" class="form-check-input" formControlName="withAuth"
+                   [checked]="updateProjectFormGroup.get('withAuth')?.value">
+          </div>
+          <div class="d-grid gap-2">
+            <button [disabled]="!updateProjectFormGroup.valid" class="btn btn-success" type="submit">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
