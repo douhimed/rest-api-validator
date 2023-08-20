@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Response Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: rgb(255, 255, 255);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .section-triangle {
+            width: 0;
+            height: 0;
+            border-top: 5px solid #333;
+            border-right: 5px solid transparent;
+            border-left: 5px solid transparent;
+        }
+
+        .json-code {
+            font-family: monospace;
+            white-space: pre;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            margin-right: 5px;
+            font-size: 14px;
+        }
+
+        .section-content {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 13px;
+        }
+
+
+        .scrollable-section {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .get-section {
+            background-color: #e2f3f5;
+        }
+    </style>
+</head>
+<body>
+<div class="container" th:action="@{/home}" th:object="${responseDto}">
+    <h1>Response Details</h1>
+    <div class="section">
+        <div class="section-header get-section" onclick="toggleCollapse('getSection')">
+            <div class="section-title" th:text="${responseDto.type}"></div>
+            <div class="section-content" th:text="${responseDto.url}"></div>
+            <div>
+                <span class="section-title" th:text="${responseDto.httpStatus}" id="httpStatus"></span>
+                <span class="section-title" th:text="${responseDto.validationStatus}" id="validationStatus"></span>
+            </div>
+
+            <div class="section-triangle"></div>
+        </div>
+
+        <div class="section-content collapse" id="getSection">
+            <div class="section-title">Expected response</div>
+            <div class="scrollable-section">
+                <pre class="json-code">
+                    <div class="section-content" th:text="${responseDto.expectedResponse}"></div>
+                </pre>
+            </div>
+
+            <div class="section-title">Actual Response</div>
+            <div class="scrollable-section">
+                <pre class="json-code">
+                    <div class="section-content" th:text="${responseDto.actualResponse}"></div>
+                </pre>
+            </div>
+
+            <div th:if="${responseDto.validationStatus != 'VALID'}">
+                <div class="section-title">Report</div>
+                <div class="scrollable-section">
+                    <div class="section-content">
+                        <div th:each="message:${responseDto.messages}">
+                            <p th:text="${message}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleCollapse(sectionId) {
+        var section = document.getElementById(sectionId);
+        section.classList.toggle('show');
+    }
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var httpStatus = document.getElementById("httpStatus");
+        var validationStatus = document.getElementById("validationStatus");
+
+        if (httpStatus.innerText === "200") {
+            httpStatus.classList.add("badge", "badge-success");
+        }
+
+        if (validationStatus.innerText === "VALID") {
+            validationStatus.classList.add("badge", "badge-success");
+        } else if (validationStatus.innerText === "INVALID") {
+            validationStatus.classList.add("badge", "badge-danger");
+        }
+    });
+</script>
+</body>
+</html>

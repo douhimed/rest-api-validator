@@ -1,0 +1,36 @@
+<a routerLink="/add-operation/{{projectId}}" class="btn btn-primary mt-4">Add Operation</a>
+
+<div class="table-responsive mt-4">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Type</th>
+        <th scope="col">URL</th>
+        <th scope="col">Expected Type</th>
+        <th scope="col" colspan="3" class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let operation of operations">
+        <td>{{ operation.id }}</td>
+        <td>{{ operation.type }}</td>
+        <td>{{ operation.url }}</td>
+        <td>{{ operation.expectedType }}</td>
+        <td>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-outline-danger btn-sm me-2" (click)="handleDeleteOperation(operation.id)">
+              <i class="bi bi-trash"></i>
+            </button>
+            <button class="btn btn-outline-success btn-sm me-2" (click)="goToEditForm(operation.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-outline-primary btn-sm" (click)="goToDetails(operation.id)">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

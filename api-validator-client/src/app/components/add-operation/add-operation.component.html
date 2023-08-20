@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-7">
+      <div class="card mt-4 custom-card">
+        <div class="card-header bg-light text-secondary">
+          <h4 class="mb-0">Add operation</h4>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmit()">
+            <div class="form-group row mb-3">
+              <label for="url" class="col-sm-3 col-form-label">URL</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="url" [(ngModel)]="operation.url" name="url" required>
+              </div>
+            </div>
+            <div class="form-group row mb-3">
+              <label for="type" class="col-sm-3 col-form-label">Type</label>
+              <div class="col-sm-9">
+                <select class="form-control" id="type" [(ngModel)]="operation.type" name="type" required>
+                  <option value="GET">GET</option>
+                  <option value="POST">POST</option>
+                  <option value="PUT">PUT</option>
+                  <option value="DELETE">DELETE</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row mb-3">
+              <label for="body" class="col-sm-3 col-form-label">Body</label>
+              <div class="col-sm-9">
+                <textarea class="form-control" id="body" [(ngModel)]="operation.body" name="body"></textarea>
+              </div>
+            </div>
+            <div class="form-group row mb-3">
+              <label for="expectedResponse" class="col-sm-3 col-form-label">Expected Response</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="expectedResponse" [(ngModel)]="operation.expectedResponse"
+                       name="expectedResponse" required>
+              </div>
+            </div>
+            <div class="form-group row mb-3">
+              <label for="expectedType" class="col-sm-3 col-form-label">Expected Type</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="expectedType" [(ngModel)]="operation.expectedType"
+                       name="expectedType" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary mt-4">Add operation</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

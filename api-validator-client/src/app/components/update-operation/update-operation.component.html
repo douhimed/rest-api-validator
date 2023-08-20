@@ -1,0 +1,47 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-header bg-light text-secondary">
+          <h4 class="mb-0">Update Operation</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="updateOperationFormGroup">
+
+            <div class="form-group mb-3">
+              <label for="url">URL:</label>
+              <input type="text" class="form-control" id="url" formControlName="url">
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="type">Type:</label>
+              <select class="form-control" id="type" formControlName="type">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+              </select>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="body">Body:</label>
+              <textarea class="form-control" id="body" formControlName="body"></textarea>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="expectedType">Expected Type:</label>
+              <input class="form-control" id="expectedType" formControlName="expectedType">
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="expectedResponse">Expected Response:</label>
+              <input class="form-control" id="expectedResponse" formControlName="expectedResponse">
+            </div>
+
+            <button type="button" class="btn btn-outline-primary mt-3" (click)="handleUpdateOperation()">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

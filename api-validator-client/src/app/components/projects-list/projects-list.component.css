@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.table {
+  font-size: 15px;
+  width: 82%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+.table thead th {
+  font-weight: bold;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ffffff;
+  padding: 13px;
+  text-align: left;
+}
+
+.table tbody td {
+  border-bottom: 1px solid #dee2e6;
+  padding: 12px;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table td:last-child {
+  text-align: center;
+}

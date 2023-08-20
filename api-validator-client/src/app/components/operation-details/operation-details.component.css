@@ -1,0 +1,16 @@
+.accordion .accordion-header {
+  background-color: #f8f9fa;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border: none;
+}
+
+.accordion .accordion-header button {
+  font-size: 16px;
+  text-align: left;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}

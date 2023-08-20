@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="RUN" type="Application" factoryName="Application">
+        <option name="MAIN_CLASS_NAME" value="com.sqli.intern.api.validator.Application" />
+        <module name="api-validator" />
+        <option name="PROGRAM_PARAMETERS" value="--db.user=root --db.password= --db.address=mysql-db --db.port=3306 --db.name=validator-test" />
+        <method v="2" />
+    </configuration>
+</component>
+

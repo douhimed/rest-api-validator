@@ -1,0 +1,52 @@
+<div class="container" *ngIf="testResult">
+  <div class="section" *ngFor="let responseDto of testResult.responseDto">
+    <div class="section-header get-section" (click)="toggleCollapse(responseDto)">
+      <div class="section-title">{{ responseDto?.type }}</div>
+      <div class="section-content">{{ responseDto?.url }}</div>
+      <div class="section-badge-container">
+        <span class="section-title badge text-bg-primary">{{ responseDto?.httpStatus }}</span>
+        <span
+          [ngClass]="{'badge': true, 'text-bg-success': responseDto?.validationStatus === 'VALID', 'text-bg-danger': responseDto?.validationStatus !== 'VALID'}">
+          {{ responseDto?.validationStatus }}
+        </span>
+      </div>
+      <div class="section-triangle"></div>
+    </div>
+    <div class="section-content" [ngClass]="{'collapse': !responseDto.isCollapsed}">
+      <div class="section-title">Expected response</div>
+      <div class="scrollable-section">
+        <pre class="json-code">{{ responseDto?.expectedResponse }}</pre>
+      </div>
+      <div class="section-title">Actual Response</div>
+      <div class="scrollable-section">
+        <pre class="json-code">{{ responseDto?.actualResponse }}</pre>
+      </div>
+      <ng-container *ngIf="responseDto?.validationStatus !== 'VALID'">
+        <div class="section-title">Rapport</div>
+        <div class="scrollable-section">
+          <div class="section-content">
+            <div *ngIf="responseDto?.messages">
+              <div *ngFor="let message of responseDto?.messages">
+                <div class="card">
+                  <div class="card-body">
+                    <p>Operation: {{ message.op }}</p>
+                    <p>Path: {{ message.path }}</p>
+                    <p *ngIf="message.value">Value: {{ message.value}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div>
+          <button type="button" class="btn btn-warning"
+            (click)="handleUpdateExpectedResponse(responseDto.id,responseDto.actualResponse)">Update Expected
+            Response</button>
+          <button type="button" class="btn btn-info" style="margin-left: 10px;"
+            (click)="sendJiraTicket(responseDto.type,responseDto.url,responseDto.messages)">Jira Ticket</button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
